@@ -1,0 +1,125 @@
+<div class="row">
+    <div ng-class="divPan">
+         <div ng-class="class" ng-show="loading">
+             <div class="row">
+                 <div class="col s12">
+                     <h5>Indicators Lists &nbsp;&nbsp;&nbsp;
+                     <span class="center-align" ng-show="searchShow"><div class="chip" ng-model=" searchKeyword "><a ng-click="groupClose()" style="cursor: pointer" > {{searchKeyword}} <i class="mdi-navigation-close"></i></a></div></span>
+                     </h5>
+                 </div>
+               </div>
+            <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover responsive-table" width="100%">
+                 <thead>
+                 <tr>
+                     <th style="width:10%">No</th>
+                     <th>Indicator Name</th>
+                     <th>Indicator Group</th>
+                     <th class="right-align">Actions</th>
+                 </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="ind in indicatorData.indicators |filter: searchKeyword ">
+                      <td style="width: 10%">{{$index + 1}}</td>
+                      <td>{{ind.name}}</td>
+                      <td>
+                          <div ng-repeat="group in ind.indicatorGroups" class="chip">
+                              <a ng-click="groupIndicatord(group.name);" style="cursor: pointer" class="tooltipped black-text" data-position="right" data-delay="50" data-tooltip="Filter by this Group "> {{group.name}}</a>
+                           </div>
+                      </td>
+                      <td>
+                          <a class="btn-floating right" style="background-color: #E4E4E4 !important;" ng-click="indicatordDetails(ind)"><i class="mdi-content-add"></i></a>
+                          <!--<div class="chip right black-text">-->
+                           <!--<a style="cursor: pointer" ng-click="indicatordDetails(ind)"><i class="small mdi-action-add"></i></a>-->
+                          <!--</div>-->
+                      </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+              <div class="center" ng-show="loader">
+                <div class="preloader-wrapper big active center-block" style="margin-top:10%">
+                    <div class="spinner-layer spinner-blue">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-red">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-yellow">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-green">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                    </div>
+                </div>
+              </div>
+    </div>
+       <div ng-class="classTohide" ng-show="sectionhide" style="height:83vh;overflow-y: scroll;margin-top:5%">
+        <indicator-detail></indicator-detail>
+       </div>
+    <div class="col s3" ng-show="loadingHelp">
+        <div class="row" style="padding-top: 25%">
+            <div class="col s12 m12">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title black-text">Help &nbsp;&nbsp;<i class="mdi-action-help"></i></span>
+                        <div class="card-action">
+                          <p>
+                            Filter by Indicator Group by clicking + icon in label
+                         </p>
+                         <p>
+                            Filter all indicators by typing any Text in a search fields
+                         </p>
+                         <p>
+                            Click the icon button to get the details of the indicator
+                        </p>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $(".dropdown-button").dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrain_width: false, // Does not change width of dropdown to that of the activator
+            hover: true, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: false, // Displays dropdown below the button
+            alignment: 'left' // Displays dropdown with edge aligned to the left of button
+        });
+        $('.collapsible').collapsible({
+            accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+        });
+        $('.tooltipped').tooltip({delay: 50});
+    });
+</script>

@@ -1,0 +1,120 @@
+<div class="row">
+    <div class="col s12 m12">
+        <div class="card">
+            <div class="card-content">
+                <h5>{{ indDetail.name }}  <span class="right"><a class="waves-circle" style="cursor: pointer" ng-click="cardClose()"><i class="material-icons">close</i></a></span>
+                </h5>
+               <div class="card-action">
+                <table>
+                    <tr>
+                        <td>Display Name</td>
+                        <td>{{indDetail.displayName}}</td>
+                    </tr>
+                    <tr>
+                        <td>Indicator Type</td>
+                        <td>{{indDetail.indicatorType.name}}</td>
+                    </tr>
+                     <tr>
+                        <td>Numerator Description</td>
+                        <td>{{indDetail.numeratorDescription}}</td>
+                    </tr>
+                    <tr>
+                        <td>Denominator Description</td>
+                        <td>{{indDetail.denominatorDescription}}</td>
+                    </tr>
+                    <tr>
+                        <td>Numerator Formula</td>
+                        <td class="hoverable hover " ng-click="numeratorDeatail(indDetail.numerator,expressionData.description)" style="cursor: pointer;text-decoration:underline">{{expressionData.description}}</td>
+                    </tr>
+                    <tr>
+                        <td>Denominator Formula</td>
+                        <td  class="hoverable hover " ng-click="denominatorDetail(indDetail.denominator,expressionDenoData.description)" style="cursor: pointer;text-decoration:underline">{{expressionDenoData.description}}</td>
+                    </tr>
+
+                </table>
+                    <div ng-show="loadData">
+                    <ul class="collapsible" data-collapsible="accordion">
+                        <li ng-repeat="data in numeratorArray">
+                            <div class="collapsible-header" ng-click="dataElementDetail(data.uid)">{{data.description}}</div>
+                             <div class="collapsible-body">
+                         </div>
+                        </li>
+                    </ul>
+                        <div ng-show="numerator">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>Data Element</td><td>{{result.name}}</td><td rowspan="2">Data Set Period Type</td>
+                                </tr>
+                                <tr>
+                                    <td>Aggregation Type</td><td>{{result.aggregationType}}</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="{{result.dataSets.length+1}}">DataSet
+                                <tr  ng-repeat="sets in dataSetDetailArray">
+                                    <td>{{sets.name}}</td>
+                                    <td>{{sets.dataSetType}}</td>
+                                </tr>
+                                </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="center" ng-show="loaderDir">
+                        <div class="preloader-wrapper big active center-block" style="margin-top:10%">
+                            <div class="spinner-layer spinner-blue">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                            </div>
+
+                            <div class="spinner-layer spinner-red">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                            </div>
+
+                            <div class="spinner-layer spinner-yellow">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                            </div>
+
+                            <div class="spinner-layer spinner-green">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+             </div>
+                <span class="card-title activator grey-text text-darken-1">{{ indDetail.name }} Trends This Year <i class="mdi-navigation-more-horiz right"></i></span>
+        </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">{{ indDetail.name }} Trends<i class="mdi-navigation-close right"></i></span>
+
+                    <highchart config="cards.chartObject"></highchart>
+
+
+            </div>
+    </div>
+
+ </div>
+</div>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html manifest="indicators.appcache" ng-app="indicators">
+    <head>
+        <title>IndicatorsBrowser</title>
+
+        <meta name="description" content="DHIS 2">
+        <meta name="keywords" content="DHIS 2">        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link type="text/css" rel="stylesheet" href="scripts/css/materialize.min.css"/>
+        <link type="text/css" rel="stylesheet" href="scripts/css/jquery.dataTables.min.css"/>
+        <style>
+            html, body {
+                height: 100% ;
+                min-height: 100%;
+            }
+            .table-bordered{
+                width: 100%;
+            }
+            .table-bordered th, .table-bordered td {
+                border: 1px solid #ddd !important;
+
+            }
+            .dropdown-content {
+            .min-width: 300px;
+            }
+
+        </style>
+
+    </head>
+
+    <body style="overflow: hidden">
+    <d2-header-bar></d2-header-bar>
+    <!--<div id="indicators-body" style="margin-top:50px;">-->
+    	<!--<div ng-include="'views/menu.html'"></div>-->
+    <div style="margin-top:50px">
+		<div ng-view></div>
+	</div>
+
+	<!--<toaster-container></toaster-container>-->
+
+    <!-- DHIS2 Settings initialization for a baseUrl that is used for the menu -->
+    <script type="text/javascript">
+        window.dhis2 = window.dhis2 || {};
+        dhis2.settings = dhis2.settings || {};
+        dhis2.settings.baseUrl = '../../../';
+    </script>
+    <script src="scripts/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/jQuery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/jQuery/ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/jQuery/jquery.plugin.min.js"></script>
+    <link type="text/css" rel="stylesheet"  href="../../../dhis-web-commons/javascripts/jQuery/ui/css/redmond/jquery-ui.css">
+
+    <link type="text/css" rel="stylesheet"  href="../../../dhis-web-commons/bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="../../../dhis-web-commons/bootstrap/js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/angular.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/angular-resource.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/angular-route.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/angular-cookies.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/angular-sanitize.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/angular-animate.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/ui-bootstrap.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/dhis2/dhis2.util.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/commons.js"></script>
+
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/plugins/angularLocalStorage.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/plugins/angular-translate.min.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/angular-animate.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/dhis2/dhis2.angular.services.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/dhis2/dhis2.angular.controllers.js"></script>
+
+    <script src="scripts/ui-bootstrap/date.js"></script>
+    <!--<link type="text/css" rel="stylesheet" href="scripts/css/dataTables.responsive.css"/>-->
+
+    <script src="scripts/js/materialize.min.js"></script>
+    <script src="scripts/js/jquery.dataTables.min.js"></script>
+    <script src="scripts/js/angular-datatables.min.js"></script>
+    <!--<script src="scripts/js/dataTables.responsive.js"></script>-->
+
+    <script type="text/javascript" src="scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/services.js"></script>
+    <script type="text/javascript" src="scripts/directives.js"></script>
+    <script type="text/javascript" src="scripts/controllers.js"></script>
+    <script type="text/javascript" src="scripts/filters.js"></script>
+    <!-- Controllers -->
+    <script type="text/javascript" src="scripts/controllers/mainController.js"></script>
+    <script type="text/javascript" src="scripts/services/mainServices.js"></script>
+
+    <!-- Menu scripts -->
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/dhis2/dhis2.translate.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/dhis2/dhis2.menu.js"></script>
+    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/dhis2/dhis2.menu.ui.js"></script>
+    <script type="text/javascript" src="scripts/highcharts-ng/src/highcharts-custom.js"></script>
+    <script type="text/javascript" src="scripts/highcharts-ng/src/highcharts-ng.js"></script>
+
+
+
+    <link type="text/css" rel="stylesheet" href="../../../dhis-web-commons/font-awesome/css/font-awesome.min.css"/>
+    <!--<link type="text/css" rel="stylesheet" media="screen" href="../../../dhis-web-commons/css/widths.css"/>-->
+    <link type="text/css" rel="stylesheet" media="screen" href="../../../dhis-web-commons/css/menu.css">
+    <!-- IMC CSS Files -->
+    <!--<link type="text/css" rel="stylesheet"  href="../../../dhis-web-commons/css/imc/imc.css">-->
+
+    <link type="text/css" rel="stylesheet" href="styles/style.css">
+    <script>
+         $(document).ready(function(){
+             $(".dropdown-button").dropdown();
+             $(".collapsible").collapsible();
+        });
+    </script>
+</body>
+</html>
