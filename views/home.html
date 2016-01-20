@@ -4,11 +4,11 @@
              <div class="row">
                  <div class="col s12">
                      <h5>Indicators Lists &nbsp;&nbsp;&nbsp;
-                     <span class="center-align" ng-show="searchShow"><div class="chip" ng-model=" searchKeyword "><a ng-click="groupClose()" style="cursor: pointer" > {{searchKeyword}} <i class="mdi-navigation-close"></i></a></div></span>
+                     <span class="center-align" ng-show="searchShow"><div ng-model="searchKeyword" class="chip"><a ng-click="groupClose()" style="cursor: pointer" > {{searchKeyword}} <i class="mdi-navigation-close"></i></a></div></span>
                      </h5>
                  </div>
                </div>
-            <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="row-border hover responsive-table" width="100%">
+            <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table responsive-table row-border hover" width="100%">
                  <thead>
                  <tr>
                      <th style="width:10%">No</th>
