@@ -1,111 +1,121 @@
-<div class="row">
-    <div ng-class="divPan">
+<div class="row" xmlns="http://www.w3.org/1999/html">
+    <div ng-class="divPan" >
          <div ng-class="class" ng-show="loading">
-             <div class="row">
-                 <div class="col s12">
-                     <h5>Indicators Lists &nbsp;&nbsp;&nbsp;
-                     <span class="center-align" ng-show="searchShow"><div ng-model="searchKeyword" class="chip"><a ng-click="groupClose()" style="cursor: pointer" > {{searchKeyword}} <i class="mdi-navigation-close"></i></a></div></span>
-                     </h5>
+             <!--<div class="row">-->
+                 <div class="col-lg-6">
+                     <div class="input-group">
+                         <span class="input-group-addon" id="basic-addon1">Search:</span>
+                         <input type="text" ng-model="q" class="form-control" placeholder="search" aria-describedby="basic-addon1">
+                     </div>
                  </div>
-               </div>
-            <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table responsive-table row-border hover" width="100%">
-                 <thead>
-                 <tr>
-                     <th style="width:10%">No</th>
-                     <th>Indicator Name</th>
-                     <th>Indicator Group</th>
-                     <th class="right-align">Actions</th>
-                 </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="ind in indicatorData.indicators |filter: searchKeyword ">
-                      <td style="width: 10%">{{$index + 1}}</td>
-                      <td>{{ind.name}}</td>
-                      <td>
-                          <div ng-repeat="group in ind.indicatorGroups" class="chip">
-                              <a ng-click="groupIndicatord(group.name);" style="cursor: pointer" class="tooltipped black-text" data-position="right" data-delay="50" data-tooltip="Filter by this Group "> {{group.name}}</a>
-                           </div>
-                      </td>
-                      <td>
-                          <a class="btn-floating right" style="background-color: #E4E4E4 !important;" ng-click="indicatordDetails(ind)"><i class="mdi-content-add"></i></a>
-                          <!--<div class="chip right black-text">-->
-                           <!--<a style="cursor: pointer" ng-click="indicatordDetails(ind)"><i class="small mdi-action-add"></i></a>-->
-                          <!--</div>-->
-                      </td>
-                  </tr>
-                </tbody>
-            </table>
-        </div>
-              <div class="center" ng-show="loader">
-                <div class="preloader-wrapper big active center-block" style="margin-top:10%">
-                    <div class="spinner-layer spinner-blue">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                        <div class="circle"></div>
-                    </div><div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                    </div>
+                 <div class="col-lg-6">
+                     <div class="input-group">
+                         <span class="input-group-addon" id="basic-addon2">Search:</span>
+                         <input type="number" min="1" max="100" class="form-control" ng-model="pageSize" style="width: 100px;" placeholder="Username" aria-describedby="basic-addon1">
+                     </div>
+                 </div><!-- /.col-lg-6 -->
+             <!--</div>-->
+             </br>
+             <hr>
+             <div class="row">
+             <ol class="breadcrumb">
+                 <li><a style="cursor: pointer" >Indicators Lists</a></li>
+                 <li ng-if="loading==true"><a  style="cursor: pointer" ng-class="{'active':indName==indDetail.name}" ng-click="indicatordDetails(indDetail)">{{indDetail.name}}</a></li>
+                 <li ng-if="showIndGroup==true"><a  style="cursor: pointer" ng-class="{'active':indName==indDetail.name}" ng-click="groupIndicatord(indicatorsObjectFromGroup.name,indicatorsObjectFromGroup.id)">{{indicatorsObjectFromGroup.name}}</a></li>
+             </ol>
+                 <ul class="list-group">
+                     <li style="cursor: pointer" class="list-group-item" ng-click="indicatordDetails(ind)" dir-paginate="ind in indicatorData.indicators | filter:q | itemsPerPage: pageSize"  total-items="totalIndicators" current-page="currentPage" about="">
+                         <!--data-content="{{popover.content}}" data-template-url="views/indicatorDetail.html" data-animation="am-flip-y" data-auto-close="1" bs-popover-->
 
-                    <div class="spinner-layer spinner-red">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                        <div class="circle"></div>
-                    </div><div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                    </div>
+                         <span class="badge col-md-offset-2" ng-repeat="group in ind.indicatorGroups"><a ng-click="groupIndicatord(group.name,group.id)" style="cursor: pointer;color: #fff !important;"  data-position="right" data-tooltip="Filter by this Group " >{{group.name}}</a></span>
+                         {{ind.name}}
+                     </li>
+                 </ul>
 
-                    <div class="spinner-layer spinner-yellow">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                        <div class="circle"></div>
-                    </div><div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                    </div>
+             <div class="row">
 
-                    <div class="spinner-layer spinner-green">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                        <div class="circle"></div>
-                    </div><div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                    </div>
-                </div>
-              </div>
-    </div>
-       <div ng-class="classTohide" ng-show="sectionhide" style="height:83vh;overflow-y: scroll;margin-top:5%">
-        <indicator-detail></indicator-detail>
-       </div>
-    <div class="col s3" ng-show="loadingHelp">
-        <div class="row" style="padding-top: 25%">
-            <div class="col s12 m12">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title black-text">Help &nbsp;&nbsp;<i class="mdi-action-help"></i></span>
-                        <div class="card-action">
-                          <p>
-                            Filter by Indicator Group by clicking + icon in label
-                         </p>
-                         <p>
-                            Filter all indicators by typing any Text in a search fields
-                         </p>
-                         <p>
-                            Click the icon button to get the details of the indicator
-                        </p>
-                        </div>
-                    </div>
-                  </div>
+                 <div class="col-xs-12">
+                     <div class="text-center">
+                         <dir-pagination-controls boundary-links="true"  on-page-change="pageChangeHandler(newPageNumber)" template-url="views/dirPagination.tpl.html"></dir-pagination-controls>
+                     </div>
+                 </div>
+             </div>
             </div>
+
         </div>
     </div>
-</div>
+    <div class="center" ng-show="loader">
+        <div class="text text-center" id="loading-bar-container"></div>
+    </div>
+
+    <div ng-class="indGroup">
+        <div class="list-group">
+            <button type="button" class="list-group-item"  ng-click="indicatordDetails(indgroup)" ng-repeat="indgroup in indicatorsObjectFromGroup.indicators" >{{indgroup.name}}
+            </button>
+        </div>
+    </div>
+
+       <div ng-class="classTohide" ng-show="sectionhide">
+           <div class="row">
+               <div class="col-sm-12">
+                   <div class="panel-group" ng-model="panels.activePanel" role="tablist" aria-multiselectable="true" bs-collapse>
+                       <div class="panel panel-default" ng-repeat="panel in panels">
+                           <div class="panel-heading" role="tab">
+                               <h4 class="panel-title">
+                                   <a bs-collapse-toggle>
+                                       {{ indDetail.name }}
+                                   </a>
+                                   <button type="button" class="close" aria-label="Close" ng-click="hide()"><span aria-hidden="true">&times;</span></button>
+                               </h4>
+                           </div>
+                           <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                               <!--<div class="panel-body">-->
+                                   <table class="table table-responsive table-bordered table-striped">
+                                       <tr>
+                                           <td>Display Name</td>
+                                           <td>{{indDetail.displayName}}</td>
+                                       </tr>
+                                       <tr>
+                                           <td>Indicator Type</td>
+                                           <td>{{indDetail.indicatorType.name}}</td>
+                                       </tr>
+                                       <tr>
+                                           <td>Numerator Description</td>
+                                           <td>{{indDetail.numeratorDescription}}</td>
+                                       </tr>
+                                       <tr>
+                                           <td>Denominator Description</td>
+                                           <td>{{indDetail.denominatorDescription}}</td>
+                                       </tr>
+                                       <tr>
+                                           <td>Numerator Formula</td>
+                                           <td>
+                                               <div class="list-group">
+                                                   <a style="cursor: pointer" ng-click="numeratorDeatail(indDetail.numerator,expressionData.description)" class="list-group-item"
+                                                      data-trigger="click"  data-placement="centre" data-animation="am-flip-x" data-template-url="views/dictionary.html" bs-tooltip="expressionData"
+                                                   >{{expressionData.description}}</a>
+                                               </div>
+                                           </td>
+                                       </tr>
+                                       <tr>
+                                           <td>Denominator Formula</td>
+                                           <td>
+                                               <div class="list-group">
+                                                   <a ng-click="denominatorDetail(indDetail.denominator,expressionDenoData.description)" class="list-group-item">{{expressionDenoData.description}}</a>
+                                               </div>
+                                           </td>
+                                       </tr>
+
+                                   </table>
+                               <!--</div>-->
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+        <!--<indicator-detail></indicator-detail>-->
+       </div>
+ </div>
 <script>
     $(document).ready(function(){
         $(".dropdown-button").dropdown({

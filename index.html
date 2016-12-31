@@ -7,52 +7,40 @@
         <meta name="keywords" content="DHIS 2">        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link type="text/css" rel="stylesheet" href="scripts/css/materialize.min.css"/>
-        <link type="text/css" rel="stylesheet" href="scripts/css/jquery.dataTables.min.css"/>
+        <!--<link type="text/css" rel="stylesheet" href="scripts/css/materialize.min.css"/>-->
+        <link type="text/css" rel="stylesheet" href="scripts/css/loading-bar.min.css"/>
+        <link type="text/css" rel="stylesheet"  href="../../../dhis-web-commons/bootstrap/css/bootstrap.min.css">
         <style>
-            html, body {
-                height: 100% ;
-                min-height: 100%;
+            .pagination li.active {
+                background-color:#fff !important;
             }
-            .table-bordered{
-                width: 100%;
-            }
-            .table-bordered th, .table-bordered td {
-                border: 1px solid #ddd !important;
-
-            }
-            .dropdown-content {
-            .min-width: 300px;
-            }
-
         </style>
 
     </head>
 
-    <body style="overflow: hidden">
+    <body>
     <d2-header-bar></d2-header-bar>
-    <!--<div id="indicators-body" style="margin-top:50px;">-->
-    	<!--<div ng-include="'views/menu.html'"></div>-->
+
     <div style="margin-top:50px">
 		<div ng-view></div>
 	</div>
 
-	<!--<toaster-container></toaster-container>-->
-
-    <!-- DHIS2 Settings initialization for a baseUrl that is used for the menu -->
+	<!-- DHIS2 Settings initialization for a baseUrl that is used for the menu -->
     <script type="text/javascript">
         window.dhis2 = window.dhis2 || {};
         dhis2.settings = dhis2.settings || {};
-        dhis2.settings.baseUrl = '../../../';
+        dhis2.settings.baseUrl = 'training';
     </script>
     <script src="scripts/js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="../../../dhis-web-commons/javascripts/jQuery/jquery.min.js"></script>
     <script type="text/javascript" src="../../../dhis-web-commons/javascripts/jQuery/ui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="../../../dhis-web-commons/javascripts/jQuery/jquery.plugin.min.js"></script>
     <link type="text/css" rel="stylesheet"  href="../../../dhis-web-commons/javascripts/jQuery/ui/css/redmond/jquery-ui.css">
+    <link type="text/css" rel="stylesheet"  href="scripts/css/bootstrap.min.css">
 
-    <link type="text/css" rel="stylesheet"  href="../../../dhis-web-commons/bootstrap/css/bootstrap.min.css">
+
     <script type="text/javascript" src="../../../dhis-web-commons/bootstrap/js/bootstrap.min.js"></script>
+
 
 
     <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/angular.js"></script>
@@ -67,16 +55,16 @@
 
     <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/plugins/angularLocalStorage.js"></script>
     <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/plugins/angular-translate.min.js"></script>
-    <script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/angular-animate.js"></script>
+    <!--<script type="text/javascript" src="../../../dhis-web-commons/javascripts/angular/angular-animate.js"></script>-->
     <script type="text/javascript" src="../../../dhis-web-commons/javascripts/dhis2/dhis2.angular.services.js"></script>
     <script type="text/javascript" src="../../../dhis-web-commons/javascripts/dhis2/dhis2.angular.controllers.js"></script>
 
     <script src="scripts/ui-bootstrap/date.js"></script>
     <!--<link type="text/css" rel="stylesheet" href="scripts/css/dataTables.responsive.css"/>-->
 
-    <script src="scripts/js/materialize.min.js"></script>
-    <script src="scripts/js/jquery.dataTables.min.js"></script>
-    <script src="scripts/js/angular-datatables.min.js"></script>
+    <!--<script src="scripts/js/materialize.min.js"></script>-->
+    <!--<script src="scripts/js/jquery.dataTables.min.js"></script>-->
+    <!--<script src="scripts/js/angular-datatables.min.js"></script>-->
     <!--<script src="scripts/js/dataTables.responsive.js"></script>-->
 
     <script type="text/javascript" src="scripts/app.js"></script>
@@ -87,6 +75,11 @@
     <!-- Controllers -->
     <script type="text/javascript" src="scripts/controllers/mainController.js"></script>
     <script type="text/javascript" src="scripts/services/mainServices.js"></script>
+    <script type="text/javascript" src="scripts/js/dirPagination.js"></script>
+    <script type="text/javascript" src="scripts/js/loading-bar.min.js"></script>
+    <!--<script src="bower_components/angular-animate/angular-animate.js"></script>-->
+    <script src="scripts/js/angular-strap.min.js"></script>
+    <script src="scripts/js/angular-strap.tpl.min.js"></script>
 
     <!-- Menu scripts -->
     <script type="text/javascript" src="../../../dhis-web-commons/javascripts/dhis2/dhis2.translate.js"></script>

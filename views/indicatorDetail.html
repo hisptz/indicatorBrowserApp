@@ -1,11 +1,10 @@
 <div class="row">
     <div class="col s12 m12">
-        <div class="card">
-            <div class="card-content">
-                <h5>{{ indDetail.name }}  <span class="right"><a class="waves-circle" style="cursor: pointer" ng-click="cardClose()"><i class="material-icons">close</i></a></span>
+        <div class="page-header">
+                <h5>{{ indDetail.name }}
                 </h5>
-               <div class="card-action">
-                <table>
+            </div>
+               <table class="table table-responsive table-strapped">
                     <tr>
                         <td>Display Name</td>
                         <td>{{indDetail.displayName}}</td>
@@ -58,55 +57,52 @@
                                 </tr>
                             </table>
                         </div>
-                    </div>
+                    <!--<div class="center" ng-show="loaderDir">-->
+                        <!--<div class="preloader-wrapper big active center-block" style="margin-top:10%">-->
+                            <!--<div class="spinner-layer spinner-blue">-->
+                                <!--<div class="circle-clipper left">-->
+                                    <!--<div class="circle"></div>-->
+                                <!--</div><div class="gap-patch">-->
+                                <!--<div class="circle"></div>-->
+                            <!--</div><div class="circle-clipper right">-->
+                                <!--<div class="circle"></div>-->
+                            <!--</div>-->
+                            <!--</div>-->
 
-                    <div class="center" ng-show="loaderDir">
-                        <div class="preloader-wrapper big active center-block" style="margin-top:10%">
-                            <div class="spinner-layer spinner-blue">
-                                <div class="circle-clipper left">
-                                    <div class="circle"></div>
-                                </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                            </div>
+                            <!--<div class="spinner-layer spinner-red">-->
+                                <!--<div class="circle-clipper left">-->
+                                    <!--<div class="circle"></div>-->
+                                <!--</div><div class="gap-patch">-->
+                                <!--<div class="circle"></div>-->
+                            <!--</div><div class="circle-clipper right">-->
+                                <!--<div class="circle"></div>-->
+                            <!--</div>-->
+                            <!--</div>-->
 
-                            <div class="spinner-layer spinner-red">
-                                <div class="circle-clipper left">
-                                    <div class="circle"></div>
-                                </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                            </div>
+                            <!--<div class="spinner-layer spinner-yellow">-->
+                                <!--<div class="circle-clipper left">-->
+                                    <!--<div class="circle"></div>-->
+                                <!--</div><div class="gap-patch">-->
+                                <!--<div class="circle"></div>-->
+                            <!--</div><div class="circle-clipper right">-->
+                                <!--<div class="circle"></div>-->
+                            <!--</div>-->
+                            <!--</div>-->
 
-                            <div class="spinner-layer spinner-yellow">
-                                <div class="circle-clipper left">
-                                    <div class="circle"></div>
-                                </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                            </div>
-
-                            <div class="spinner-layer spinner-green">
-                                <div class="circle-clipper left">
-                                    <div class="circle"></div>
-                                </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-
-             </div>
-                <span class="activator grey-text text-darken-2">{{ indDetail.name }} Trends This Year <i style="cursor: pointer" class="small mdi-navigation-more-horiz right"></i></span>
-        </div>
+                            <!--<div class="spinner-layer spinner-green">-->
+                                <!--<div class="circle-clipper left">-->
+                                    <!--<div class="circle"></div>-->
+                                <!--</div><div class="gap-patch">-->
+                                <!--<div class="circle"></div>-->
+                            <!--</div><div class="circle-clipper right">-->
+                                <!--<div class="circle"></div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+               <!--</div>-->
+          <span class="activator grey-text text-darken-2">{{ indDetail.name }} Trends This Year <i style="cursor: pointer" class="small mdi-navigation-more-horiz right"></i></span>
+                 </div>
             <div class="card-reveal">
                 <span class="card-title grey-text text-darken-1">{{ indDetail.name }} Trends<i class="mdi-navigation-close right"></i></span>
 
@@ -114,7 +110,25 @@
 
 
             </div>
-    </div>
-
- </div>
+        </div>
 </div>
+<!--<div class="row">
+<div class="col-sm-12">
+<div class="panel-group" ng-model="panels.activePanel" role="tablist" aria-multiselectable="true" bs-collapse>
+    <div class="panel panel-default" ng-repeat="panel in panels">
+        <div class="panel-heading" role="tab">
+            <h4 class="panel-title">
+                <a bs-collapse-toggle>
+                    {{ indDetail.name }}
+                </a>
+            </h4>
+        </div>
+        <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+            <div class="panel-body">
+                {{ indDetail.displayName }}
+            </div>
+        </div>
+    </div>
+ </div>
+    </div>
+    </div>-->

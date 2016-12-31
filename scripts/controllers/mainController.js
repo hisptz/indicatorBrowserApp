@@ -1,47 +1,50 @@
-var mainController  = angular.module('mainController',['datatables','ngResource','highcharts-ng'])
-.constant('indicatorUrl','../../../api/indicators.json?fields=id,name,href,shortName,displayName,denominatorDescription,numeratorDescription,denominator,numerator,indicatorType[name],indicatorGroups[name]&paging=false')
+var mainController  = angular.module('mainController',['ngResource','highcharts-ng'])
+.constant('indicatorUrl','../../../api/indicators.json?fields=id,name,href,shortName,displayName,denominatorDescription,numeratorDescription,denominator,numerator,indicatorType[name],indicatorGroups[name,id]&paging=true')
 .constant("indicatorGroupUrl", "../../../api/indicatorGroups.json?paging=false&fields=id,name,href");
 mainController.controller('MainController',['$scope','$timeout','$window',
-        '$http','$filter','$resource','indicatorUrl','indicatorGroupUrl','DTOptionsBuilder','DTColumnDefBuilder',
+        '$http','$filter','$resource','indicatorUrl','indicatorGroupUrl',
         function($scope,$timeout,$window,$http,$filter,$resource,
-                 indicatorUrl,indicatorGroupUrl,
-                 DTOptionsBuilder, DTColumnDefBuilder){
+                 indicatorUrl,indicatorGroupUrl){
+            $scope.pageSize = 10;
             var selectedIndicators = null;
-            $scope.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers')
-                .withDisplayLength(50)
-                .withOption('scrollY', '70vh');
             $scope.numeratorArray=[];
             $scope.loading = false;
-            $scope.loadingHelp = false;
             $scope.sectionhide = false;
             $scope.loader = true;
-            $scope.divPan = "col s7 offset-s1";
-            $scope.class = "col s12";
+            $scope.divPan = "col-md-10";
+            $scope.class = "col-md-12";
             $scope.classTohide = " ";
-            $scope.initialization=function() {
-            $http.get(indicatorUrl).success(function (indicatorsObject) {
-                $timeout(function () {
-                    $scope.loader = false;
+            $scope.totalIndicators=0;
+            $scope.initialization=function(page) {
+            $http.get(indicatorUrl+"&page="+page).success(function (indicatorsObject) {
                     $scope.indicatorData = indicatorsObject;
-                    $scope.loadingHelp = true;
+                    $scope.totalIndicators=indicatorsObject.pager.total;
+                    $scope.currentPage=indicatorsObject.pager.page;
                     $scope.loading = true;
                     console.log(indicatorsObject);
-                }, 2000);
-            })
+             })
                 .error(function (error) {
                     $scope.data.error = error;
                 });
-
-
+             }
+            $scope.pageChangeHandler = function(num) {
+                $scope.initialization(num);
+                console.log('indicator page changed to ' + num);
             }
-            $scope.searchKeyword='';
-            $scope.searchShow=false;
-            $scope.groupIndicatord=function(groupName){
-                $timeout(function(){
+            $scope.showIndGroup=false;
+            $scope.groupIndicatord=function(groupName,uid){
+                $scope.divPan = "col-md-6";
+                $scope.sectionhide = false;
+                $http.get('../../../api/indicatorGroups/'+uid+'.json').success(function(object){
+                    $scope.indicatorsObjectFromGroup=object;
+                    $scope.showIndGroup=true;
+                    $scope.loading = true;
+                    $scope.indGroup="col-md-5"
+                })
+
+
                 $scope.searchKeyword=groupName;
                 $scope.searchShow=true;
-                console.info($scope.searchKeyword);
-                },2000);
               }
             $scope.groupClose=function(){
                 $timeout(function(){
@@ -54,27 +57,29 @@ mainController.controller('MainController',['$scope','$timeout','$window',
                 $scope.loading=true;
                 $scope.numerator=false;
                 $scope.loadingHelp = false;
-                $scope.divPan = "col s7 offset-s1";
+                $scope.divPan = "col-md-5";
                 $scope.sectionhide=true;
-                $scope.classTohide="col s4";
+                $scope.classTohide="col-md-7";
                 $scope.indDetail=indicatorObject;
+                $scope.indName=indicatorObject.name;
+                $scope.panels.activePanel = 0;
                 $scope.indicatorTrends(indicatorObject.id,indicatorObject.name);
                 $scope.replacedExpression=
                         $resource('../../../api/expressions/description',{get:{method:"JSONP"}});
                     $scope.indicatorNumeratorExpression=$scope.replacedExpression.get({expression:indicatorObject.numerator},function(expData){
                         $scope.expressionData=expData;
-                        console.log( expData);
+                        //console.log( expData);
                     });
                     $scope.indicatorDenominatorExpression=$scope.replacedExpression.get({expression:indicatorObject.denominator},function(expDenoData){
                         $scope.expressionDenoData=expDenoData;
                         // console.log( expDenoData);
                     });
                }
-        $scope.initialization();
+        $scope.initialization(1);
 
           //$scope.indicatorDetailResult=null;
-        $scope.cardClose=function(){
-          $scope.divPan="col s7 offset-s1";
+        $scope.hide=function(){
+          $scope.divPan="col-md-11 col-offset-sm-1";
           $scope.loadingHelp = true;
           $scope.sectionhide=false;
           $scope.classTohide="";
@@ -204,14 +209,13 @@ mainController.controller('MainController',['$scope','$timeout','$window',
         angular.forEach(jsonObject.metaData.ou,function(orgUnits){
             data.push({'name':jsonObject.metaData.names[orgUnits],'id':orgUnits,'value':getDataFromUrl(jsonObject.rows,orgUnits)});
         });
-        console.log(data);
         return data;
     }
     $scope.prepareSeries = function(cardObject,chart){
         cardObject.chartObject.loading = true;
         $scope.url = "../../../api/analytics.json?dimension=dx:"+cardObject.data+"&dimension=ou:"+$scope.concOrgUnits+"&filter=pe:"+$scope.year+"&displayProperty=NAME";
         $http.get($scope.url).success(function(data){
-            console.info(data);
+            //console.info(data);
             $scope.area = [];
             cardObject.chartObject.xAxis.categories = [];
             var dataToUse = $scope.prepareData(data);
@@ -227,7 +231,7 @@ mainController.controller('MainController',['$scope','$timeout','$window',
             cardObject.chartObject.chart.type=chart;
             $scope.normalseries.push({type: chart, name: cardObject.title, data: serie});
             cardObject.chartObject.series = $scope.normalseries;
-            console.log(cardObject.chartObject.series);
+            //console.log(cardObject.chartObject.series);
             cardObject.chartObject.loading = false
         });
 

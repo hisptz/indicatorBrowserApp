@@ -10,11 +10,7 @@ CACHE:
 ../../../dhis-web-commons/javascripts/jQuery/ui/jquery-ui.min.js
 ../../../dhis-web-commons/javascripts/jQuery/jquery.plugin.min.js
 
-../../../dhis-web-commons/javascripts/jQuery/calendars/jquery.calendars.min.js
-
 ../../../dhis-web-commons/javascripts/jQuery/ui/css/redmond/jquery-ui.css
-../../../dhis-web-commons/javascripts/jQuery/calendars/css/ui.calendars.picker.css
-../../../dhis-web-commons/css/imc/imc.css?_rev=${revision}
 
 ../../../dhis-web-commons/fonts/LiberationSans-Regular-webfont.eot
 ../../../dhis-web-commons/fonts/LiberationSans-Regular-webfont.woff
@@ -47,7 +43,6 @@ styles/style.css
 ../../../dhis-web-commons/javascripts/angular/angular-sanitize.js
 ../../../dhis-web-commons/javascripts/angular/angular-animate.js
 ../../../dhis-web-commons/javascripts/angular/ui-bootstrap.js
-../../../dhis-web-commons/javascripts/angular/ui-bootstrap-tpls-0.10.0-draggable-modal.js
 
 
 #scripts/angular-translate.min.js
@@ -55,11 +50,6 @@ styles/style.css
 ../../../dhis-web-commons/javascripts/angular/plugins/angular-translate.min.js
 ../../../dhis-web-commons/javascripts/dhis2/dhis2.angular.services.js
 ../../../dhis-web-commons/javascripts/dhis2/dhis2.angular.controllers.js
-../../../dhis-web-commons/javascripts/angular/plugins/angular-translate-loader-static-files.min.js
-../../../dhis-web-commons/javascripts/angular/plugins/dhis2/directives.js
-../../../dhis-web-commons/javascripts/angular/plugins/dhis2/filters.js
-../../../dhis-web-commons/javascripts/angular/plugins/dhis2/services.js
-../../../dhis-web-commons/javascripts/moment/moment-with-langs.min.js
 
 ../../../dhis-web-commons/css/light_blue/logo_banner.png
 ../../../images/ajax-loader-bar.gif
@@ -82,28 +72,14 @@ styles/style.css
 ../../../dhis-web-commons/javascripts/commons.ajax.js
 ../../../dhis-web-commons/javascripts/lists.js
 ../../../dhis-web-commons/javascripts/periodType.js
-../../../dhis-web-commons/javascripts/date.js
-../../../dhis-web-commons/javascripts/json2.js
-../../../dhis-web-commons/javascripts/validationRules.js
-../../../dhis-web-commons/javascripts/dhis2/dhis2.array.js
-../../../dhis-web-commons/javascripts/dhis2/dhis2.select.js
-../../../dhis-web-commons/javascripts/dhis2/dhis2.availability.js
-../../../dhis-web-commons/javascripts/dhis2/dhis2.trigger.js
-../../../dhis-web-commons/javascripts/dhis2/dhis2.sharing.js
-../../../dhis-web-commons/javascripts/dhis2/dhis2.validation.js
-../../../dhis-web-commons/javascripts/dhis2/dhis2.storage.ss.js
-../../../dhis-web-commons/javascripts/dhis2/dhis2.storage.ls.js
-../../../dhis-web-commons/javascripts/dhis2/dhis2.storage.idb.js
 ../../../dhis-web-commons/javascripts/dhis2/dhis2.storage.memory.js
 ../../../dhis-web-commons/javascripts/dhis2/dhis2.storage.js
-../../../dhis-web-commons/javascripts/dhis2/dhis2.contextmenu.js
 ../../../dhis-web-commons/javascripts/dhis2/dhis2.appcache.js
-../../../dhis-web-commons/ouwt/ouwt.js
+
 ../../../dhis-web-commons/javascripts/dhis2/dhis2.translate.js
 ../../../dhis-web-commons/javascripts/dhis2/dhis2.menu.js
 ../../../dhis-web-commons/javascripts/dhis2/dhis2.menu.ui.js
-../../../dhis-web-commons/paging/serverside-pagination.html
-../../../dhis-web-commons/customform/custom-form.html
+
 
 scripts/app.js
 scripts/services.js
