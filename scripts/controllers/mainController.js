@@ -1,9 +1,9 @@
 var mainController  = angular.module('mainController',['ngResource','highcharts-ng'])
 .constant('indicatorUrl','../../../api/indicators.json?fields=id,name,href,shortName,displayName,denominatorDescription,numeratorDescription,denominator,numerator,indicatorType[name],indicatorGroups[name,id]&paging=true')
 .constant("indicatorGroupUrl", "../../../api/indicatorGroups.json?paging=false&fields=id,name,href");
-mainController.controller('MainController',['$scope','$timeout','$window',
-        '$http','$filter','$resource','indicatorUrl','indicatorGroupUrl',
-        function($scope,$timeout,$window,$http,$filter,$resource,
+mainController.controller('MainController',['$scope','$timeout','$window','$location','$q',
+        '$http','$filter','$resource','$routeParams','indicatorGroupList','indicatorUrl','indicatorGroupUrl',
+        function($scope,$timeout,$window,$location,$q,$http,$filter,$resource,$routeParams,indicatorGroupList,
                  indicatorUrl,indicatorGroupUrl){
             $scope.pageSize = 10;
             var selectedIndicators = null;
@@ -31,18 +31,23 @@ mainController.controller('MainController',['$scope','$timeout','$window',
                 $scope.initialization(num);
                 console.log('indicator page changed to ' + num);
             }
+
+            $scope.params=$routeParams;
+
             $scope.showIndGroup=false;
-            $scope.groupIndicatord=function(groupName,uid){
-                $scope.divPan = "col-md-6";
-                $scope.sectionhide = false;
-                $http.get('../../../api/indicatorGroups/'+uid+'.json').success(function(object){
-                    $scope.indicatorsObjectFromGroup=object;
+            $scope.groupIndicatord=function(uid,groupName){
+                $scope.classTohide=" ";
+                $scope.sectionhide=false;
+                $scope.groupName=groupName
+                $scope.divPan = "col-md-5";
+                $scope.panels.activePanelind=0;
+                $q.when(indicatorGroupList.listIndicatorGroup(uid)).then(function (promisedata) {
+                    $scope.indicatorsObjectFromGroup=promisedata;
                     $scope.showIndGroup=true;
                     $scope.loading = true;
-                    $scope.indGroup="col-md-5"
+                    $scope.showIndGroupDetails=true;
+                    $scope.indGroup="col-md-7"
                 })
-
-
                 $scope.searchKeyword=groupName;
                 $scope.searchShow=true;
               }
@@ -52,8 +57,29 @@ mainController.controller('MainController',['$scope','$timeout','$window',
                 $scope.searchShow=false;
                 },2000);
             }
-            $scope.indicatordDetails=function(indicatorObject){
+            $scope.indicatordDetailGroup=function (uid,indicatorObject,index) {
                 $scope.numeratorArray.length=0;
+                $scope.showDetails=true;
+                $scope.indDetail=indicatorObject;
+                $scope.indName=indicatorObject.name;
+                $scope.uid=uid;
+                $scope.replacedExpression=
+                    $resource('../../../api/expressions/description',{get:{method:"JSONP"}});
+                $scope.indicatorNumeratorExpression=$scope.replacedExpression.get({expression:indicatorObject.numerator},function(expData){
+                    $scope.expressionData=expData;
+                    //console.log( expData);
+                });
+                $scope.indicatorDenominatorExpression=$scope.replacedExpression.get({expression:indicatorObject.denominator},function(expDenoData){
+                    $scope.expressionDenoData=expDenoData;
+                    // console.log( expDenoData);
+                });
+            }
+            $scope.indicatordDetails=function(indicatorObject){
+
+                $scope.indGroup='';
+                $scope.showIndGroupDetails=false;
+                $scope.numeratorArray.length=0;
+                $scope.active=" ";
                 $scope.loading=true;
                 $scope.numerator=false;
                 $scope.loadingHelp = false;
@@ -83,33 +109,61 @@ mainController.controller('MainController',['$scope','$timeout','$window',
           $scope.loadingHelp = true;
           $scope.sectionhide=false;
           $scope.classTohide="";
+          $scope.showIndGroupDetails=false;
         }
-        $scope.numeratorDeatail=function(numeratorUrl,numericText){
-           $scope.numeratorArray.length=0;
-           $scope.numerator=false;
-           $scope.loadData=false;
-           $scope.loaderDir=true;
+      $scope.numeratorDeatail=function(numeratorUrl,numericText){
+          $scope.actives=" ";
+          $scope.active="active";
+          $scope.numeratorArray.length=0;
+          $scope.numerator=false;
+          $scope.loadData=false;
+          $scope.loadData2=false;
+          $scope.loaderDir=true;
           var separators = [' ', '\\\+', '-', '\\\(', '\\\)', '\\*', '/', ':', '\\\?'];
-           $scope.numeratorUid=numeratorUrl.split(new RegExp(separators.join('|'), 'g'));
-           $scope.numericExpressionText=numericText.split('+');
-           $scope.numeratorArray=[];
-           angular.forEach($scope.numeratorUid,function(numUid){
-                $scope.numApi=
-                $resource("../../../api/expressions/description",{get:{method:"JSONP"}});
-                $scope.numeratorUrlResult=$scope.numApi.get({expression:numUid},function(data){
-                 $timeout(function(){
-                     $scope.loaderDir=false;
+          $scope.numeratorUid=numeratorUrl.split(new RegExp(separators.join('|'), 'g'));
+          $scope.numericExpressionText=numericText.split('+');
+          $scope.numeratorArray=[];
+          angular.forEach($scope.numeratorUid,function(numUid){
+              $scope.numApi=
+                  $resource("../../../api/expressions/description",{get:{method:"JSONP"}});
+              $scope.numeratorUrlResult=$scope.numApi.get({expression:numUid},function(data){
+                  $timeout(function(){
+                      $scope.loaderDir=false;
                       $scope.numeratorArray.push({"description":data.description,"uid":numUid});
-                     $scope.loadData=true;
-                     console.log($scope.numeratorArray);
+                      $scope.loadData=true;
+                      console.log($scope.numeratorArray);
                   },2000);
-               });
-
               });
+
+          });
         }
+
       $scope.denominatorDetail=function(denominatorUrl,denominatorText){
-          $scope.numeratorDeatail(denominatorUrl,denominatorText);
-      }
+          $scope.actives="active";
+          $scope.active="";
+          $scope.numeratorArray.length=0;
+          $scope.numerator=false;
+          $scope.loadData=false;
+          $scope.loadData2=false;
+          $scope.loaderDirs=true;
+          var separators = [' ', '\\\+', '-', '\\\(', '\\\)', '\\*', '/', ':', '\\\?'];
+          $scope.numeratorUid=denominatorUrl.split(new RegExp(separators.join('|'), 'g'));
+          $scope.numericExpressionText=denominatorText.split('+');
+          $scope.numeratorArray=[];
+          angular.forEach($scope.numeratorUid,function(numUid){
+              $scope.numApi=
+                  $resource("../../../api/expressions/description",{get:{method:"JSONP"}});
+              $scope.numeratorUrlResult=$scope.numApi.get({expression:numUid},function(data){
+                  $timeout(function(){
+                      $scope.loaderDirs=false;
+                      $scope.numeratorArray.push({"description":data.description,"uid":numUid});
+                      $scope.loadData2=true;
+                      console.log($scope.numeratorArray);
+                  },2000);
+              });
+
+          });
+         }
        $scope.numerator=false;
        $scope.dataElementDetail=function(dataElementUrl){
           $scope.dataSetDetailArray=[];
@@ -237,6 +291,12 @@ mainController.controller('MainController',['$scope','$timeout','$window',
 
     }
 }]);
+mainController.controller('IndicatorController',['$scope','$timeout','$window','$location',
+    '$http','$filter','$resource','$routeParams','indicatorGroupList',
+    function($scope,$timeout,$window,$location,$http,$filter,$resource,$routeParams,indicatorGroupList) {
+             $scope.params=$routeParams;
+             $scope.testservice=indicatorGroupList.listIndicatorGroup($scope.params.uid);
+    }]);
 function getDataFromUrl(arr,ou) {
     var num = 0
     $.each(arr, function (k, v) {

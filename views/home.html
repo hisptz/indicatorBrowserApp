@@ -23,13 +23,17 @@
                  <li ng-if="loading==true"><a  style="cursor: pointer" ng-class="{'active':indName==indDetail.name}" ng-click="indicatordDetails(indDetail)">{{indDetail.name}}</a></li>
                  <li ng-if="showIndGroup==true"><a  style="cursor: pointer" ng-class="{'active':indName==indDetail.name}" ng-click="groupIndicatord(indicatorsObjectFromGroup.name,indicatorsObjectFromGroup.id)">{{indicatorsObjectFromGroup.name}}</a></li>
              </ol>
-                 <ul class="list-group">
-                     <li style="cursor: pointer" class="list-group-item" ng-click="indicatordDetails(ind)" dir-paginate="ind in indicatorData.indicators | filter:q | itemsPerPage: pageSize"  total-items="totalIndicators" current-page="currentPage" about="">
-                         <!--data-content="{{popover.content}}" data-template-url="views/indicatorDetail.html" data-animation="am-flip-y" data-auto-close="1" bs-popover-->
+                 <table>
 
-                         <span class="badge col-md-offset-2" ng-repeat="group in ind.indicatorGroups"><a ng-click="groupIndicatord(group.name,group.id)" style="cursor: pointer;color: #fff !important;"  data-position="right" data-tooltip="Filter by this Group " >{{group.name}}</a></span>
-                         {{ind.name}}
+                 </table>
+                 <ul class="list-group">
+                     <li class="list-group-item"  dir-paginate="ind in indicatorData.indicators | filter:q | itemsPerPage: pageSize"  total-items="totalIndicators" current-page="currentPage" about="">
+                         <a style="cursor: pointer;color: #555;" ng-click="indicatordDetails(ind)">{{ind.name}}</a>
+                         <span class="badge" ng-repeat="group in ind.indicatorGroups">
+                          <a ng-click="groupIndicatord(group.id,group.name)" style="cursor: pointer;color: #fff !important;"  data-position="right" data-tooltip="Filter by this Group " >{{group.name}}</a>
+                         </span>
                      </li>
+
                  </ul>
 
              <div class="row">
@@ -48,10 +52,29 @@
         <div class="text text-center" id="loading-bar-container"></div>
     </div>
 
-    <div ng-class="indGroup">
-        <div class="list-group">
-            <button type="button" class="list-group-item"  ng-click="indicatordDetails(indgroup)" ng-repeat="indgroup in indicatorsObjectFromGroup.indicators" >{{indgroup.name}}
-            </button>
+    <div ng-class="indGroup" ng-show="showIndGroupDetails">
+        <div class="panel-group" ng-model="panels.activePanelind" role="tablist" aria-multiselectable="true" bs-collapse>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab">
+                    <h4 class="panel-title">
+                        <a bs-collapse-toggle>
+                            {{ groupName }}:
+                        </a>
+                        <span style="cursor: pointer" ng-click="seach()" class="glyphicon glyphicon-search"></span>
+                        <button type="button" class="close" aria-label="Close" ng-click="hide()"><span aria-hidden="true">&times;</span></button>
+                        <input type="text" ng-model="z" placeholder="search">
+                    </h4>
+                </div>
+                <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                <div class="list-group">
+                    <a class="list-group-item"  ng-click="indicatordDetailGroup(indgroup.id,indgroup,$index)" ng-repeat="indgroup in indicatorsObjectFromGroup.indicators| filter:z" >{{indgroup.name}}
+                        <div ng-class="details" ng-show="showDetails" ng-if="uid==indgroup.id">
+                            <indicator-detail></indicator-detail>
+                        </div>
+                    </a>
+                </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -59,7 +82,7 @@
            <div class="row">
                <div class="col-sm-12">
                    <div class="panel-group" ng-model="panels.activePanel" role="tablist" aria-multiselectable="true" bs-collapse>
-                       <div class="panel panel-default" ng-repeat="panel in panels">
+                       <div class="panel panel-default">
                            <div class="panel-heading" role="tab">
                                <h4 class="panel-title">
                                    <a bs-collapse-toggle>
@@ -91,9 +114,28 @@
                                            <td>Numerator Formula</td>
                                            <td>
                                                <div class="list-group">
-                                                   <a style="cursor: pointer" ng-click="numeratorDeatail(indDetail.numerator,expressionData.description)" class="list-group-item"
-                                                      data-trigger="click"  data-placement="centre" data-animation="am-flip-x" data-template-url="views/dictionary.html" bs-tooltip="expressionData"
-                                                   >{{expressionData.description}}</a>
+                                                   <a style="cursor: pointer" ng-click="numeratorDeatail(indDetail.numerator,expressionData.description)" class="list-group-item" ng-class="active">{{expressionData.description}}</a>
+                                               </div>
+                                               <div class="progress" ng-show="loaderDir">
+                                                   <div id="progressouter" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                       <span class="sr-only" id="progress">100% Complete</span>
+                                                   </div>
+                                               </div>
+                                               <div ng-show="loadData" class="panel-group" ng-model="panels.activePanels" role="tablist" aria-multiselectable="true" bs-collapse>
+                                                   <div class="panel panel-default" ng-repeat="data in numeratorArray">
+                                                       <div class="panel-heading" role="tab">
+                                                           <h4 class="panel-title">
+                                                               <a bs-collapse-toggle>
+                                                                   {{ data.description }}
+                                                               </a>
+                                                           </h4>
+                                                       </div>
+                                                       <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                                                           <div class="panel-body">
+                                                               {{ data }}
+                                                           </div>
+                                                       </div>
+                                                   </div>
                                                </div>
                                            </td>
                                        </tr>
@@ -101,7 +143,28 @@
                                            <td>Denominator Formula</td>
                                            <td>
                                                <div class="list-group">
-                                                   <a ng-click="denominatorDetail(indDetail.denominator,expressionDenoData.description)" class="list-group-item">{{expressionDenoData.description}}</a>
+                                                   <a style="cursor: pointer" ng-click="denominatorDetail(indDetail.denominator,expressionDenoData.description)" class="list-group-item" ng-class="actives">{{expressionDenoData.description}}</a>
+                                               </div>
+                                               <div class="progress" ng-show="loaderDirs">
+                                                   <div  class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                       <span class="sr-only" >100% Complete</span>
+                                                   </div>
+                                               </div>
+                                               <div ng-show="loadData2" class="panel-group" ng-model="panels.activePanels" role="tablist" aria-multiselectable="true" bs-collapse>
+                                                   <div class="panel panel-default" ng-repeat="data in numeratorArray">
+                                                       <div class="panel-heading" role="tab">
+                                                           <h4 class="panel-title">
+                                                               <a bs-collapse-toggle>
+                                                                   {{ data.description }}
+                                                               </a>
+                                                           </h4>
+                                                       </div>
+                                                       <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                                                           <div class="panel-body">
+                                                               {{ data }}
+                                                           </div>
+                                                       </div>
+                                                   </div>
                                                </div>
                                            </td>
                                        </tr>
@@ -116,20 +179,3 @@
         <!--<indicator-detail></indicator-detail>-->
        </div>
  </div>
-<script>
-    $(document).ready(function(){
-        $(".dropdown-button").dropdown({
-            inDuration: 300,
-            outDuration: 225,
-            constrain_width: false, // Does not change width of dropdown to that of the activator
-            hover: true, // Activate on hover
-            gutter: 0, // Spacing from edge
-            belowOrigin: false, // Displays dropdown below the button
-            alignment: 'left' // Displays dropdown with edge aligned to the left of button
-        });
-        $('.collapsible').collapsible({
-            accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-        });
-        $('.tooltipped').tooltip({delay: 50});
-    });
-</script>

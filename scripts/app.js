@@ -4,7 +4,7 @@
 /* App Module */
 
 var indicators = angular.module('indicators',
-                    ['ui.bootstrap',
+                     ['ui.bootstrap',
                      'ngRoute', 'ui.date',
                      'ngCookies',
                      'ngSanitize',
@@ -27,6 +27,9 @@ var indicators = angular.module('indicators',
 .config(function($translateProvider,$routeProvider) {
 
 	$routeProvider.when('/', {
+        templateUrl: 'views/home.html',
+        controller: 'MainController'
+    }).when('/indicatorGroup/:uid', {
         templateUrl: 'views/home.html',
         controller: 'MainController'
     }).otherwise({

@@ -1,134 +1,89 @@
-<div class="row">
-    <div class="col s12 m12">
-        <div class="page-header">
-                <h5>{{ indDetail.name }}
-                </h5>
+<div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                {{ indDetail.name }}
             </div>
-               <table class="table table-responsive table-strapped">
-                    <tr>
-                        <td>Display Name</td>
-                        <td>{{indDetail.displayName}}</td>
-                    </tr>
-                    <tr>
-                        <td>Indicator Type</td>
-                        <td>{{indDetail.indicatorType.name}}</td>
-                    </tr>
-                     <tr>
-                        <td>Numerator Description</td>
-                        <td>{{indDetail.numeratorDescription}}</td>
-                    </tr>
-                    <tr>
-                        <td>Denominator Description</td>
-                        <td>{{indDetail.denominatorDescription}}</td>
-                    </tr>
-                    <tr>
-                        <td>Numerator Formula</td>
-                        <td class="hoverable hover " ng-click="numeratorDeatail(indDetail.numerator,expressionData.description)" style="cursor: pointer;text-decoration:underline">{{expressionData.description}}</td>
-                    </tr>
-                    <tr>
-                        <td>Denominator Formula</td>
-                        <td  class="hoverable hover " ng-click="denominatorDetail(indDetail.denominator,expressionDenoData.description)" style="cursor: pointer;text-decoration:underline">{{expressionDenoData.description}}</td>
-                    </tr>
-
-                </table>
-                    <div ng-show="loadData">
-                    <ul class="collapsible" data-collapsible="accordion">
-                        <li ng-repeat="data in numeratorArray">
-                            <div class="collapsible-header" ng-click="dataElementDetail(data.uid)">{{data.description}}</div>
-                             <div class="collapsible-body">
-                         </div>
-                        </li>
-                    </ul>
-                        <div ng-show="numerator">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <td>Data Element</td><td>{{result.name}}</td><td rowspan="2">Data Set Period Type</td>
-                                </tr>
-                                <tr>
-                                    <td>Aggregation Type</td><td>{{result.aggregationType}}</td>
-                                </tr>
-                                <tr>
-                                    <td rowspan="{{result.dataSets.length+1}}">DataSet
-                                <tr  ng-repeat="sets in dataSetDetailArray">
-                                    <td>{{sets.name}}</td>
-                                    <td>{{sets.dataSetType}}</td>
-                                </tr>
-                                </td>
-                                </tr>
-                            </table>
+            <!--<div class="panel-body">-->
+            <!--<div class="panel-body">-->
+            <table class="table table-responsive table-bordered table-striped">
+                <tr>
+                    <td>Display Name</td>
+                    <td>{{indDetail.displayName}}</td>
+                </tr>
+                <tr>
+                    <td>Indicator Type</td>
+                    <td>{{indDetail.indicatorType.name}}</td>
+                </tr>
+                <tr>
+                    <td>Numerator Description</td>
+                    <td>{{indDetail.numeratorDescription}}</td>
+                </tr>
+                <tr>
+                    <td>Denominator Description</td>
+                    <td>{{indDetail.denominatorDescription}}</td>
+                </tr>
+                <tr>
+                    <td>Numerator Formula</td>
+                    <td>
+                        <div class="list-group">
+                            <a style="cursor: pointer" ng-click="numeratorDeatail(indDetail.numerator,expressionData.description)" class="list-group-item" ng-class="active">{{expressionData.description}}</a>
                         </div>
-                    <!--<div class="center" ng-show="loaderDir">-->
-                        <!--<div class="preloader-wrapper big active center-block" style="margin-top:10%">-->
-                            <!--<div class="spinner-layer spinner-blue">-->
-                                <!--<div class="circle-clipper left">-->
-                                    <!--<div class="circle"></div>-->
-                                <!--</div><div class="gap-patch">-->
-                                <!--<div class="circle"></div>-->
-                            <!--</div><div class="circle-clipper right">-->
-                                <!--<div class="circle"></div>-->
-                            <!--</div>-->
-                            <!--</div>-->
+                        <div class="progress" ng-show="loaderDir">
+                            <div id="progressouter" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span class="sr-only" id="progress">100% Complete</span>
+                            </div>
+                        </div>
+                        <div ng-show="loadData" class="panel-group" ng-model="panels.activePanels" role="tablist" aria-multiselectable="true" bs-collapse>
+                            <div class="panel panel-default" ng-repeat="data in numeratorArray">
+                                <div class="panel-heading" role="tab">
+                                    <h4 class="panel-title">
+                                        <a bs-collapse-toggle>
+                                            {{ data.description }}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                                    <div class="panel-body">
+                                        {{ data }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Denominator Formula</td>
+                    <td>
+                        <div class="list-group">
+                            <a style="cursor: pointer" ng-click="denominatorDetail(indDetail.denominator,expressionDenoData.description)" class="list-group-item" ng-class="actives">{{expressionDenoData.description}}</a>
+                        </div>
+                        <div class="progress" ng-show="loaderDirs">
+                            <div  class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span class="sr-only" >100% Complete</span>
+                            </div>
+                        </div>
+                        <div ng-show="loadData2" class="panel-group" ng-model="panels.activePanels" role="tablist" aria-multiselectable="true" bs-collapse>
+                            <div class="panel panel-default" ng-repeat="data in numeratorArray">
+                                <div class="panel-heading" role="tab">
+                                    <h4 class="panel-title">
+                                        <a bs-collapse-toggle>
+                                            {{ data.description }}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                                    <div class="panel-body">
+                                        {{ data }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
 
-                            <!--<div class="spinner-layer spinner-red">-->
-                                <!--<div class="circle-clipper left">-->
-                                    <!--<div class="circle"></div>-->
-                                <!--</div><div class="gap-patch">-->
-                                <!--<div class="circle"></div>-->
-                            <!--</div><div class="circle-clipper right">-->
-                                <!--<div class="circle"></div>-->
-                            <!--</div>-->
-                            <!--</div>-->
-
-                            <!--<div class="spinner-layer spinner-yellow">-->
-                                <!--<div class="circle-clipper left">-->
-                                    <!--<div class="circle"></div>-->
-                                <!--</div><div class="gap-patch">-->
-                                <!--<div class="circle"></div>-->
-                            <!--</div><div class="circle-clipper right">-->
-                                <!--<div class="circle"></div>-->
-                            <!--</div>-->
-                            <!--</div>-->
-
-                            <!--<div class="spinner-layer spinner-green">-->
-                                <!--<div class="circle-clipper left">-->
-                                    <!--<div class="circle"></div>-->
-                                <!--</div><div class="gap-patch">-->
-                                <!--<div class="circle"></div>-->
-                            <!--</div><div class="circle-clipper right">-->
-                                <!--<div class="circle"></div>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-               <!--</div>-->
-          <span class="activator grey-text text-darken-2">{{ indDetail.name }} Trends This Year <i style="cursor: pointer" class="small mdi-navigation-more-horiz right"></i></span>
-                 </div>
-            <div class="card-reveal">
-                <span class="card-title grey-text text-darken-1">{{ indDetail.name }} Trends<i class="mdi-navigation-close right"></i></span>
-
-                    <highchart config="cards.chartObject"></highchart>
-
-
-            </div>
-        </div>
-</div>
-<!--<div class="row">
-<div class="col-sm-12">
-<div class="panel-group" ng-model="panels.activePanel" role="tablist" aria-multiselectable="true" bs-collapse>
-    <div class="panel panel-default" ng-repeat="panel in panels">
-        <div class="panel-heading" role="tab">
-            <h4 class="panel-title">
-                <a bs-collapse-toggle>
-                    {{ indDetail.name }}
-                </a>
-            </h4>
-        </div>
-        <div class="panel-collapse" role="tabpanel" bs-collapse-target>
-            <div class="panel-body">
-                {{ indDetail.displayName }}
-            </div>
-        </div>
+            </table>
+            <!--</div>-->
+        <!--</div>-->
     </div>
- </div>
-    </div>
-    </div>-->
+
+
