@@ -1,2 +1,2 @@
- indicatorBrowserApp
+indicator-browser-app
 
